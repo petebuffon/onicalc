@@ -1,12 +1,21 @@
-"""Food Calculator for Oxygen Not Included"""
+"""Food Calculator for Oxygen Not Included."""
 from collections import defaultdict
 from food import preorder, food_dict
 
+# __all__ = [
+#     "foodcalc"
+# ]
+
 
 def foodcalc(dupes, name):
-    """Calculates resource cost of specified food.
+    """Calculate resource cost of specified food.
+
+    The number of dupes is specified along with the exact name of a recipe.
+
     >>>foodcalc(4, "Gristle Berry")
-    {'Gristle Berry': 2.0, 'Bristle Blossom': 12.0, 'Water': 240.0}"""
+    {'Gristle Berry': 2.0, 'Bristle Blossom': 12.0, 'Water': 240.0}
+    """
+
     food = food_dict[name]
     kcal = dupes * 1000
     values = defaultdict(int)

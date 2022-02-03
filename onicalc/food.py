@@ -1,13 +1,14 @@
 """General tree structure of oni's food."""
 from collections import deque
 
+
 class Node():
     """Base general tree class"""
     def __init__(self, name):
         """name and children"""
         self.name = name
         self.children = []
-    
+
     def insert(self, name, node):
         """Inserts defined node into tree at named node."""
         parent_node = search(self, name)
@@ -48,7 +49,7 @@ class Plant(Node):
         """name, children, growth, production, quantity"""
         super().__init__(name)
         self.growth = growth
-        self.production = production  
+        self.production = production
         self.quantity = 1
 
 
@@ -104,7 +105,7 @@ bristle_berry.insert("Bristle Berry", bristle_blossom)
 grubfruit_plant = Plant("Grubfruit Plant", 8, 8)
 grubfruit_plant.insert("Grubfruit Plant", Resource("Sulfur", 10))
 
-spindly_grubfruit_plant = Plant("Spindly Grubfruit Plant", 8, 8)
+spindly_grubfruit_plant = Plant("Spindly Grubfruit Plant", 4, 1)
 grubfruit_plant.insert("Grubfruit Plant", Resource("Sulfur", 10))
 
 sleet_wheat = Plant("Sleet Wheat", 18, 18)
@@ -115,14 +116,20 @@ waterweed = Plant("Waterweed", 12, 12)
 waterweed.insert("Waterweed", Resource("Salt Water", 5))
 waterweed.insert("Waterweed", Resource("Bleach Stone", 0.5))
 
-lettuce_wrap = Recipe("Lettuce Wrap", 4800)
-lettuce_wrap.insert("Lettuce Wrap", Food("Fried Mushroom", 1))
-lettuce_wrap.insert("Fried Mushroom", Food("Mushroom", 1))
-lettuce_wrap.insert("Mushroom", dusk_cap)
-lettuce_wrap.insert("Lettuce Wrap", Food("Lettuce", 4))
+lettuce = Recipe("Lettuce", 400)
+lettuce.insert("Lettuce", waterweed)
+
+mushroom_wrap = Recipe("Mushroom Wrap", 4800)
+mushroom_wrap.insert("Mushroom Wrap", Food("Fried Mushroom", 1))
+mushroom_wrap.insert("Fried Mushroom", Food("Mushroom", 1))
+mushroom_wrap.insert("Mushroom", dusk_cap)
+mushroom_wrap.insert("Mushroom Wrap", Food("Lettuce", 4))
+mushroom_wrap.insert("Lettuce", waterweed)
 
 meal_lice = Recipe("Meal Lice", 600)
 meal_lice.insert("Meal Lice", mealwood)
+
+meat = Recipe("Meat", 1600)
 
 liceloaf = Recipe("Liceloaf", 1700)
 liceloaf.insert("Liceloaf", Food("Meal Lice", 2))
@@ -139,14 +146,15 @@ mush_bar.insert("Mush Bar", Resource("Dirt", 75))
 
 mush_fry = Recipe("Mush Fry", 1050)
 mush_fry.insert("Mush Fry", Food("Mush Bar", 1))
-mush_bar.insert("Mush Bar", Resource("Water", 75))
-mush_bar.insert("Mush Bar", Resource("Dirt", 75))
+mush_fry.insert("Mush Bar", Resource("Water", 75))
+mush_fry.insert("Mush Bar", Resource("Dirt", 75))
 
 omelette = Recipe("Omelette", 2800)
-omelette.insert("Omelette", Food("Raw Egg", 1))
+omelette.insert("Omelette", Resource("Raw Egg", 1))
 
 roast_grubfruit_nut = Recipe("Roast Grubfruit Nut", 1200)
-roast_grubfruit_nut.insert("Roast Grubfruit Nut", Food("Spindly Grubfruit", 1))
+roast_grubfruit_nut.insert("Roast Grubfruit Nut",
+                           Food("Spindly Grubfruit", 1))
 roast_grubfruit_nut.insert("Spindly Grubfruit", grubfruit_plant)
 
 pepper_bread = Recipe("Pepper Bread", 4000)
@@ -159,8 +167,9 @@ barbeque = Recipe("Barbeque", 4000)
 barbeque.insert("Barbeque", Resource("Meat", 2))
 
 cooked_fish = Recipe("Cooked Fish", 1600)
-cooked_fish.insert("Cooked Fish", Food("Pacu Fillet", 1))
-cooked_fish.insert("Pacu Fillet", Resource("Pacu", 1))
+cooked_fish.insert("Cooked Fish", Resource("Pacu Fillet", 1))
+
+pacu_fillet = Recipe("Pacu Fillet", 1000)
 
 frost_burger = Recipe("Frost Burger", 6000)
 frost_burger.insert("Frost Burger", Food("Lettuce", 1))
@@ -169,7 +178,7 @@ frost_burger.insert("Frost Burger", Food("Frost Bun", 1))
 frost_burger.insert("Frost Bun", Food("Sleet Wheat Grain", 3))
 frost_burger.insert("Sleet Wheat Grain", sleet_wheat)
 frost_burger.insert("Frost Burger", Food("Barbeque", 1))
-frost_burger.insert("Barbeque", Food("Meat", 1.25))
+frost_burger.insert("Barbeque", Resource("Meat", 2))
 
 gristle_berry = Recipe("Gristle Berry", 2000)
 gristle_berry.insert("Gristle Berry", Food("Bristle Berry", 1))
@@ -184,6 +193,9 @@ fried_mushroom = Recipe("Fried Mushroom", 2800)
 fried_mushroom.insert("Fried Mushroom", Food("Mushroom", 1))
 fried_mushroom.insert("Mushroom", dusk_cap)
 
+mushroom = Recipe("Mushroom", 2400)
+mushroom.insert("Mushroom", dusk_cap)
+
 frost_bun = Recipe("Frost Bun", 1200)
 frost_bun.insert("Frost Bun", Food("Sleet Wheat Grain", 3))
 frost_bun.insert("Sleet Wheat Grain", sleet_wheat)
@@ -191,6 +203,12 @@ frost_bun.insert("Sleet Wheat Grain", sleet_wheat)
 swampy_delights = Recipe("Swampy Delights", 2240)
 swampy_delights.insert("Swampy Delights", Food("Bog Jelly", 1))
 swampy_delights.insert("Bog Jelly", bog_bucket)
+
+grubfruit = Recipe("Grubfruit", 250)
+grubfruit.insert("Grubfruit", grubfruit_plant)
+
+spindly_grubfruit = Recipe("Spindly Grubfruit", 800)
+spindly_grubfruit.insert("Spindly Grubfruit", spindly_grubfruit_plant)
 
 grubfruit_preserve = Recipe("Grubfruit Preserve", 2400)
 grubfruit_preserve.insert("Grubfruit Preserve", Resource("Sucrose", 4))
@@ -232,8 +250,10 @@ surf_n_turf = Recipe("Surf'n'Turf", 6000)
 surf_n_turf.insert("Surf'n'Turf", Food("Barbeque", 1))
 surf_n_turf.insert("Barbeque", Resource("Meat", 2))
 surf_n_turf.insert("Surf'n'Turf", Food("Cooked Fish", 1))
-surf_n_turf.insert("Cooked Fish", Food("Pacu Fillet", 1))
-surf_n_turf.insert("Pacu Fillet", Resource("Pacu", 1))
+surf_n_turf.insert("Cooked Fish", Resource("Pacu Fillet", 1))
+
+bog_jelly = Recipe("Bog Jelly", 1840)
+bog_jelly.insert("Bog Jelly", bog_bucket)
 
 food_dict = {
     "Gristle Berry": gristle_berry,
@@ -249,9 +269,9 @@ food_dict = {
     "Surf'n'Turf": surf_n_turf,
     "Barbeque": barbeque,
     "Bristle Berry": bristle_berry,
-    "Lettuce Wrap": lettuce_wrap,
+    "Mushroom Wrap": mushroom_wrap,
     "Meal Lice": meal_lice,
-    "LiceLoaf": liceloaf,
+    "Liceloaf": liceloaf,
     "Pickled Meal": pickled_meal,
     "Mush Bar": mush_bar,
     "Mush Fry": mush_fry,
@@ -261,5 +281,12 @@ food_dict = {
     "Frost Burger": frost_burger,
     "Frost Bun": frost_bun,
     "Swampy Delights": swampy_delights,
-    "Roast Grubfruit Nut": roast_grubfruit_nut
+    "Roast Grubfruit Nut": roast_grubfruit_nut,
+    "Pacu Fillet": pacu_fillet,
+    "Mushroom": mushroom,
+    "Lettuce": lettuce,
+    "Meat": meat,
+    "Grubfruit": grubfruit,
+    "Spindly Grubfruit": spindly_grubfruit,
+    "Bog Jelly": bog_jelly
 }
